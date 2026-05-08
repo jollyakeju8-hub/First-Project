@@ -1,0 +1,280 @@
+:root {
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --bg-gradient-start: #a18cd1;
+    --bg-gradient-end: #fbc2eb;
+    --glass-bg: rgba(255, 255, 255, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --text-main: #1e293b;
+    --text-muted: #475569;
+    --task-bg: rgba(255, 255, 255, 0.6);
+    --task-hover: rgba(255, 255, 255, 0.85);
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    padding: 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+}
+
+.glass-effect {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    font-size: clamp(2rem, 5vw + 1rem, 3.5rem);
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+header p {
+    color: var(--text-muted);
+    font-size: clamp(1rem, 2vw + 0.5rem, 1.25rem);
+}
+
+.input-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+#todo-input {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
+    font-family: inherit;
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#todo-input::placeholder {
+    color: var(--text-muted);
+}
+
+#todo-input:focus {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#add-btn {
+    padding: 0 24px;
+    border-radius: 12px;
+    background: var(--primary-color);
+    color: white;
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+#add-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+#add-btn:active {
+    transform: translateY(0);
+}
+
+.todo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-bottom: 20px;
+}
+
+/* Custom Scrollbar for list */
+.todo-list::-webkit-scrollbar {
+    width: 6px;
+}
+.todo-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.todo-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    background: var(--task-bg);
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease forwards;
+}
+
+.todo-item:hover {
+    background: var(--task-hover);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.todo-item.deleting {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(4px);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+}
+
+.todo-item.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.todo-item.completed {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.checkbox-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.checkbox-wrapper input {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255,255,255,0.8);
+}
+
+.checkbox-wrapper input:checked {
+    background: var(--primary-color);
+}
+
+.checkbox-wrapper input:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.task-text {
+    flex: 1;
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.2rem);
+    word-break: break-word;
+    transition: all 0.3s ease;
+    font-weight: 400;
+}
+
+.delete-btn {
+    background: transparent;
+    color: var(--text-muted);
+    font-size: clamp(1.1rem, 2vw + 0.5rem, 1.4rem);
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger-color);
+}
+
+.footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: clamp(0.875rem, 1.2vw + 0.5rem, 1rem);
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 16px;
+}
+
+.clear-btn {
+    background: transparent;
+    color: var(--text-muted);
+    font-size: clamp(0.875rem, 1.2vw + 0.5rem, 1rem);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.clear-btn:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.5);
+}
